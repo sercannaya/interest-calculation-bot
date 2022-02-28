@@ -47,7 +47,17 @@
             </select>
           </label>
         </div>
+        <div class="calculateArea">
+          <button class="calculateButton">Calculate</button>
+        </div>
       </div>
+    </div>
+    <div class="calculateResult">
+      <span class="title">Calculation Result</span>
+      <label class="outText">
+        if you invested ${{capital}} now, 
+        {{termValue}} {{term}} later, you get <span class="resultText">{{result}}</span>
+      </label>
     </div>
   </div>
 </template>
@@ -64,6 +74,7 @@ export default {
       rateType: 'Yearly',
       termValue: 0,
       term: 'Year',
+      result: 0,
       termArray: [
         'Year',
         'Month',
@@ -159,5 +170,58 @@ export default {
   padding: 0 2px 1px;
 }
 
+.calculateArea {
+  border-top: 1px solid silver;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+}
+
+.calculateButton {
+  box-sizing: content-box;
+  padding: 10px;
+  min-width: 100px;
+  background-color: #0094ff;
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+  border: solid 1px transparent;
+  font-weight: 600;
+  text-shadow: 1px 1px 1px #555;
+  position: relative;
+  margin-top: 30px;
+}
+
+.calculateResult {
+  max-width: 600px;
+  background-color: #d8dbd3;
+  box-shadow: 0 0 12px #888;
+  border-radius: 7px;
+  margin-top: 20px;
+  padding: 20px 10px 10px;
+  margin-right: auto;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  text-align: center;
+  font-family: Cambria, sans-serif;
+  border-bottom: 1px solid silver;
+  padding-bottom: 10px;
+  font-size: 20px;
+  color: #23233b;
+}
+
+.outText {
+  color: #313629;
+  margin-top: 20px;
+}
+
+.resultText {
+  font-weight: 600;
+  font-size: 18px;
+}
 
 </style>
