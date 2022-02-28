@@ -48,15 +48,15 @@
           </label>
         </div>
         <div class="calculateArea">
-          <button class="calculateButton">Calculate</button>
+          <button :style="[buttonDisable ? disabledStyle : '']" :disabled="buttonDisable" @click="interestCalculation()" class="calculateButton">Calculate</button>
         </div>
       </div>
     </div>
-    <div class="calculateResult">
+    <div class="calculateResult" v-if="result !==0">
       <span class="title">Calculation Result</span>
       <label class="outText">
-        if you invested ${{capital}} now, 
-        {{termValue}} {{term}} later, you get <span class="resultText">{{result}}</span>
+        if you invested {{capital}}$ now, 
+        {{termValue}} {{term}} later, you get <span class="resultText">{{result}}$</span>
       </label>
     </div>
   </div>
@@ -80,8 +80,46 @@ export default {
         'Month',
         'Day',
       ],
+      disabledStyle: {
+        background: '#ccc',
+      },
     }
   },
+  methods: {
+    interestCalculation() {
+      const result = this.capital * Math.pow((1 + this.rate * 0.01), this.computedTermValue);
+      this.result = parseInt(result);
+      console.log(this.result)
+    }
+  },
+  computed: {
+    computedTermValue() {
+      if (this.rateType === 'Yearly') {
+        if (this.term === 'Year') {
+          return this.termValue
+        } else if (this.term === 'Month') {
+          return this.termValue/12
+        } else {
+          return this.termValue/360
+        }
+      } else if (this.rateType === 'Monthly') {
+        if (this.term === 'Year') {
+          return this.termValue * 12
+        } else if (this.term === 'Month') {
+          return this.termValue
+        } else return this.termValue/30
+      } else {
+          if (this.term === 'Year') {
+          return this.termValue * 360
+        } else if (this.term === 'Month') {
+          return this.termValue * 30
+        } else return this.termValue
+      }
+    },
+    buttonDisable() {
+      return this.termValue ==0 || this.rate ==0 || this.result ===null
+    }
+  }
 }
 </script>
 
